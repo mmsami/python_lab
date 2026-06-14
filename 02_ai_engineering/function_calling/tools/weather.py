@@ -28,7 +28,7 @@ def get_weather(city: str) -> str:
 
 SCHEMA = {
     "name": "get_weather",
-    "description": "Get current wetaher for a city",
+    "description": "Get current weather for a city",
     "parameters": {
         "type": "object",
         "properties": {"city": {"type": "string", "description": "City name"}},

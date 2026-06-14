@@ -40,7 +40,7 @@ Each tool is a plain Python function + a schema dict describing it.
 - `read_file(path: str) -> str`
 - Reads file, returns first 2000 chars + line count
 
-### Step 2 — Tool Schemas
+### ~~Step 2 — Tool Schemas~~ ✅ DONE
 Each tool exports a `SCHEMA` dict in Gemini function declaration format:
 ```python
 SCHEMA = {
@@ -56,7 +56,7 @@ SCHEMA = {
 }
 ```
 
-### Step 3 — Agent Loop (`agent.py`)
+### ~~Step 3 — Agent Loop (`agent.py`)~~ ✅ DONE
 ```
 while True:
     user input
@@ -70,7 +70,7 @@ while True:
 ```
 Handles: multi-turn history, consecutive tool calls, graceful exit.
 
-### Step 4 — Multi-turn CLI
+### ~~Step 4 — Multi-turn CLI~~ ✅ DONE
 - Maintain `history` list across turns
 - `quit` / `exit` to end session
 - Print which tool was called (transparency)

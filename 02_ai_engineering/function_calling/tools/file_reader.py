@@ -27,6 +27,16 @@ def read_file(path: str) -> str:
         return f"Error reading '{path}': {e}"
 
 
+SCHEMA = {
+    "name": "read_file",
+    "description": "Read contents of a file",
+    "parameters": {
+        "type": "object",
+        "properties": {"path": {"type": "string", "description": "File path"}},
+        "required": ["path"],
+    },
+}
+
 if __name__ == "__main__":
     with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as f:
         f.write("line1\nline2\nline3\n")
