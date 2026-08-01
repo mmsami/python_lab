@@ -164,3 +164,19 @@ scrapy crawl sap_spider -o sap_jobs.json
 - Start with JSON output, SQLite is a pipeline swap when needed
 - `networkidle` causes timeouts on SAP (constant background XHR) — use `wait_for_selector` only
 - Pagination URL is relative (`?q=...`) — always use `response.urljoin()` not string concat
+
+## Portfolio-Ready Finish Line
+
+This module should stay a small ingestion example, not become a flagship project. To make it presentable:
+
+1. Add detail-page parsing for full job descriptions.
+2. Write to SQLite with `job_id` as primary key.
+3. Add deduplication / stop-on-known-job behavior.
+4. Add one small parser test using saved HTML or a fixture.
+5. Add a sample output file with 5-10 records, not a large scrape dump.
+6. Document run command, expected output, and one production risk.
+
+Interview angle:
+- "I can build ingestion pipelines that handle pagination, IDs, deduplication, and schema decisions before downstream AI or analytics touches the data."
+
+Do not overinvest here. The stronger data/retrieval story is still `smart_job_agent`; this module is supporting evidence for ingestion basics.
