@@ -49,26 +49,33 @@ def run_agent():
 
         response = chat.send_message(user_input)
 
-        candidate = response.candidates[0] if response.candidates else None
-        parts = (
-            candidate.content.parts if (candidate and candidate.content) else None
-        ) or []
+        while True:
+            candidate = response.candidates[0] if response.candidates else None
+            parts = (
+                candidate.content.parts if (candidate and candidate.content) else None
+            ) or []
 
-        # handle tool calls
-        for part in parts:
-            if part.function_call:
-                fn_name = part.function_call.name
-                fn_args = dict(part.function_call.args or {})
-                print(f"[calling tool: {fn_name}({fn_args})]")
+            has_tool_calls = False
 
-                if fn_name and fn_name in TOOL_MAP:
-                    result = TOOL_MAP[fn_name](**fn_args)
-                    response = chat.send_message(
-                        types.Part.from_function_response(
-                            name=fn_name,
-                            response={"result": result},
+            # handle tool calls
+            for part in parts:
+                if part.function_call:
+                    has_tool_calls = True
+                    fn_name = part.function_call.name
+                    fn_args = dict(part.function_call.args or {})
+                    print(f"[calling tool: {fn_name}({fn_args})]")
+
+                    if fn_name and fn_name in TOOL_MAP:
+                        result = TOOL_MAP[fn_name](**fn_args)
+                        response = chat.send_message(
+                            types.Part.from_function_response(
+                                name=fn_name,
+                                response={"result": result},
+                            )
                         )
-                    )
+
+            if not has_tool_calls:
+                break
 
         print(f"Agent: {response.text}")
 
